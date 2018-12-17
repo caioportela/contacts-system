@@ -49,5 +49,36 @@ int main() {
       fclose(fp);
       break;
   }
+  
+    case 2:
+      /*--------------------------- List contacts ---------------------------*/
+      system("cls");
+      printf("\n\t\t========================");
+      printf("\n\t\t\tCONTACTS");
+      printf("\n\t\t========================");
+      printf("\n\nName\t\tPhone\t   Email");
+      printf("\n===================================================\n\n");
+
+      for(int i = 97; i <= 122; i++) {
+        fp = fopen("contact.dll", "r");
+        
+        found = 0;
+        while(fread(&list, sizeof(list), 1, fp) == 1) {
+          if(list.name[0] == i || list.name[0] == i-32) {
+            printf("\nName\t: %s\nPhone\t: %ld\nEmail\t: %s\n", list.name, list.phone, list.email);
+            found++;
+          }
+        }
+
+        if(found != 0) {
+          printf("========================================= [%c] - (%d) \n\n", i-32, found);
+          getch();
+        }
+      
+      fclose(fp);
+      }
+
+      break;
+  }  
   return 0;
 }
