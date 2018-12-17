@@ -72,11 +72,11 @@ int main() {
 
         if(found != 0) {
           printf("======================================================== %c (%d) \n\n", i-32, found);
-          getch();
         }
       
       fclose(fp);
       }
+      getch();
 
       break;
 
@@ -125,6 +125,45 @@ int main() {
         printf("\n\n\t[1] Yes\t\t[0] No\n");
         scanf("%d", &menu);
       } while(menu == 1);
+
+      break;
+
+    case 4:
+      /*--------------------------- Edit contacts ---------------------------*/
+      system("cls");
+
+      fp = fopen("contact.dll", "r");
+      ft = fopen("temp.dat", "w");
+      char name[20];
+
+      printf("\n\n\t\tEDIT CONTACT");
+      printf("\n\t===========================");
+      printf("\n\tContact to edit: ");
+      scanf(" %[^\n]", &name);
+
+      while(fread(&list, sizeof(list), 1, fp) == 1) {
+        if(stricmp(name, list.name) != 0)
+          fwrite(&list, sizeof(list), 1, ft);
+      }
+
+      printf("\n\n..::Editing: '%s'", name);
+      printf("\n==============================================================\n");
+      printf("\n\nName: ");
+      scanf(" %[^\n]", &list.name);
+
+      printf("Phone: ");
+      scanf(" %ld", &list.phone);
+
+      printf("Email: ");
+      scanf(" %s", &list.email);
+
+      fwrite(&list, sizeof(list), 1, ft);
+
+      fclose(fp);
+      fclose(ft);
+
+      remove("contact.dll");
+      rename("temp.dat", "contact.dll");
 
       break;
   }
