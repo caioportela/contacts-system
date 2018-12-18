@@ -36,13 +36,13 @@ int main() {
       system("cls");
       fp = fopen("contact.dll", "a");
 
-      printf("Name: ");
+      printf("\n\n\t\tName: ");
       scanf(" %[^\n]", &list.name);
 
-      printf("Phone: ");
+      printf("\t\tPhone: ");
       scanf(" %ld", &list.phone);
 
-      printf("Email: ");
+      printf("\t\tEmail: ");
       scanf(" %s", &list.email);
 
       fwrite(&list, sizeof(list), 1, fp);
@@ -76,7 +76,6 @@ int main() {
       
       fclose(fp);
       }
-      getch();
 
       break;
 
@@ -122,7 +121,7 @@ int main() {
         fclose(fp);
 
         printf("\n..::Try again?");
-        printf("\n\n\t[1] Yes\t\t[0] No\n");
+        printf("\n\n\t\t[1] Yes\t[0] No\n\t\t");
         scanf("%d", &menu);
       } while(menu == 1);
 
@@ -166,6 +165,55 @@ int main() {
       rename("temp.dat", "contact.dll");
 
       break;
+
+    case 5:
+      /*-------------------------- Delete contacts --------------------------*/
+      system("cls");
+
+      printf("\n\n\t\tDELETE CONTACT");
+      printf("\n\t===========================");
+      printf("\n\tContact to delete: ");
+      scanf(" %[^\n]", &name);
+
+      fp = fopen("contact.dll", "r");
+      ft = fopen("temp.dat", "w");
+
+      while(fread(&list, sizeof(list), 1, fp) != 0)
+        if(stricmp(name, list.name) != 0)
+          fwrite(&list, sizeof(list), 1, ft);
+
+      fclose(fp);
+      fclose(ft);
+
+      remove("contact.dll");
+      rename("temp.dat", "contact.dll");
+
+      break;
+
+    case 0:
+      printf("\n\n\t\tAre you sure you want to exit?");
+      break;
+
+    default:
+      printf("Invalid choice");
+      break;
   }
+
+//  printf("\n\n\nEnter the choice:");
+  printf("\n\n\t\t[1] Main Menu\t[0] Exit\n\t\t");
+  scanf("%d", &menu);
+
+  switch(menu) {
+    case 1:
+      goto main;
+
+    case 0:
+      break;
+
+    default:
+      printf("Invalid choice");
+      break;
+  }
+
   return 0;
 }
